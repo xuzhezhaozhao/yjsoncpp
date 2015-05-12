@@ -38,22 +38,3 @@ int parse_string (parser_state *p, const char *prog)
 
 	return 0 == n ? 0 : 1;
 }
-
-void * new_obj (int tag) {
-	void *obj = NULL;
-	switch (tag) {
-		case XJSON_TARRAY:
-			obj = new ArrayObject();
-			break;
-		case XJSON_TOBJECT:
-			obj = new JsonObject();
-			break;
-		case XJSON_TSTRING:
-			obj = new Key();
-			break;
-		default:
-			// TODO error handle
-			break;
-	}
-	return obj;
-}

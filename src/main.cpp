@@ -4,12 +4,14 @@
 
 using namespace std;
 
-#define CHECK(s, r)                                            \
+#define CHECK(s, r, p)                                            \
 	do {                                                   \
 		if (!(r))                                      \
 			fprintf(stdout, "%s: Syntax OK\n", s); \
-		else                                           \
+		else {                                          \
 			fprintf(stdout, "%s: Syntax NG\n", s); \
+			fprintf(stdout, "%s\n", p.errmsg ? p.errmsg : "unknown error"); \
+		} \
 	} while (0)
 
 int main(int argc, char *argv[]) {
@@ -49,12 +51,12 @@ int main(int argc, char *argv[]) {
 
 	if (e_prog) {
 		printf("%s\n", e_prog);
-		CHECK("string: ", parse_string(&p, e_prog));
+		CHECK("string: ", parse_string(&p, e_prog), p);
 	} else if (argc == 1) {
-		CHECK("stdin: ", parse_input(&p, stdin));
+		CHECK("stdin: ", parse_input(&p, stdin), p);
 	} else {
 		for (int i = 1; i < argc; i++) {
-			CHECK(argv[i], parse_file(&p, argv[i]));
+			CHECK(argv[i], parse_file(&p, argv[i]), p);
 		}
 	}
 

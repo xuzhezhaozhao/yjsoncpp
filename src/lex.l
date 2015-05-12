@@ -56,15 +56,7 @@ OPERATOR ("{"|"}"|"]"|"["|","|":")
 				}
 {OPERATOR}		{ return yytext[0]; }
 [ \t\n]			{  }
-.				{ 
-#ifdef DEBUG_VERBOSE
-	/*
-	fprintf(stderr, "error: lexical error, unexpected char '%c' at line %d.\n",
-	yytext[0], yylineno);
-	*/
-#endif
-	return LEX_ERROR;
-}
+.				{  }
 
 
 

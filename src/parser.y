@@ -1,6 +1,6 @@
 %{
-#define YYDEBUG 1
-#define YYERROR_VERBOSE 1
+#define YYDEBUG 0
+#define YYERROR_VERBOSE 0
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,7 +40,6 @@ static void yyerror(parser_state *p, const char *s);
 %}
 
 %token NUMBER STRING
-%token LEX_ERROR
 
 %%
 
@@ -170,7 +169,6 @@ String: STRING
 
 static void yyerror(parser_state *p, const char *s)
 {
-#ifdef DEBUG_VERBOSE
-	fprintf(stderr, "error: %s at line %d.\n", s, yylineno);
-#endif
+	p->errmsg = new char[128];
+	sprintf(p->errmsg, "error: %s at line %d.\n", s, yylineno);
 }

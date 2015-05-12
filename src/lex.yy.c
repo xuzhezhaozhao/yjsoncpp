@@ -826,22 +826,14 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 59 "src/lex.l"
-{ 
-#ifdef DEBUG_VERBOSE
-	/*
-	fprintf(stderr, "error: lexical error, unexpected char '%c' at line %d.\n",
-	yytext[0], yylineno);
-	*/
-#endif
-	return LEX_ERROR;
-}
+{  }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 71 "src/lex.l"
+#line 63 "src/lex.l"
 ECHO;
 	YY_BREAK
-#line 845 "src/lex.yy.c"
+#line 837 "src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1810,7 +1802,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 71 "src/lex.l"
+#line 63 "src/lex.l"
 
 
 
