@@ -1,6 +1,6 @@
 #include <cstdio>
 
-#include "json.h"
+#include "xjson.h"
 
 using namespace std;
 

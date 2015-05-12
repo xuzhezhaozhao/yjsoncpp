@@ -73,7 +73,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "json.h"
+#include "xjson.h"
 
 
 
@@ -120,13 +120,21 @@ typedef union YYSTYPE
 /* Line 293 of yacc.c  */
 #line 11 "src/parser.y"
 
-	int a;
-	char b;
+	TValue *tv;
+	double n;
+	char *s;
+
+	std::pair<Key*, TValue*> *p;
+	std::map<Key*, TValue*> *mp;
+	std::vector<TValue*> *vec;
+
+	ArrayObject *arrobj;
+	JsonObject *jsonobj;
 
 
 
 /* Line 293 of yacc.c  */
-#line 130 "src/y.tab.c"
+#line 138 "src/y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -137,14 +145,14 @@ typedef union YYSTYPE
 /* Copy the second part of user declarations.  */
 
 /* Line 343 of yacc.c  */
-#line 20 "src/parser.y"
+#line 37 "src/parser.y"
 
 int yylex(YYSTYPE *lval, parser_state *p);
 static void yyerror(parser_state *p, const char *s);
 
 
 /* Line 343 of yacc.c  */
-#line 148 "src/y.tab.c"
+#line 156 "src/y.tab.c"
 
 #ifdef short
 # undef short
@@ -435,8 +443,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    31,    34,    35,    38,    39,    42,    43,
-      46,    47,    48,    49,    52,    53,    56,    59,    62
+       0,    47,    47,    53,    61,    67,    74,    80,    87,    93,
+     101,   108,   115,   122,   131,   138,   147,   155,   161
 };
 #endif
 
@@ -1376,10 +1384,197 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
+        case 2:
 
 /* Line 1806 of yacc.c  */
-#line 1383 "src/y.tab.c"
+#line 48 "src/parser.y"
+    {
+		  /*printf("json object\n");*/
+		p->root.value.obj = (yyvsp[(1) - (1)].jsonobj);
+		p->root.tt = XJSON_TOBJECT;
+	}
+    break;
+
+  case 3:
+
+/* Line 1806 of yacc.c  */
+#line 54 "src/parser.y"
+    {
+		  /*printf("json array\n");*/
+		p->root.value.arrobj = (yyvsp[(1) - (1)].arrobj);
+		p->root.tt = XJSON_TARRAY;
+	}
+    break;
+
+  case 4:
+
+/* Line 1806 of yacc.c  */
+#line 62 "src/parser.y"
+    {
+		  /*printf("object\n");*/
+		(yyval.jsonobj) = new JsonObject();
+	  	(yyval.jsonobj)->mp = (yyvsp[(2) - (3)].mp);
+	  }
+    break;
+
+  case 5:
+
+/* Line 1806 of yacc.c  */
+#line 68 "src/parser.y"
+    {
+		  /*printf("empty object\n");*/
+		(yyval.jsonobj) = new JsonObject();
+	  }
+    break;
+
+  case 6:
+
+/* Line 1806 of yacc.c  */
+#line 75 "src/parser.y"
+    {
+		  /*printf("array\n");*/
+		(yyval.arrobj) = new ArrayObject();
+	 	(yyval.arrobj)->vec = (yyvsp[(2) - (3)].vec);
+	 }
+    break;
+
+  case 7:
+
+/* Line 1806 of yacc.c  */
+#line 81 "src/parser.y"
+    {
+		  /*printf("empty array\n");*/
+		(yyval.arrobj) = new ArrayObject();
+	 }
+    break;
+
+  case 8:
+
+/* Line 1806 of yacc.c  */
+#line 88 "src/parser.y"
+    {
+		  /*printf("values\n");*/
+	  	(yyvsp[(1) - (3)].vec)->push_back((yyvsp[(3) - (3)].tv));
+		(yyval.vec) = (yyvsp[(1) - (3)].vec);
+	  }
+    break;
+
+  case 9:
+
+/* Line 1806 of yacc.c  */
+#line 94 "src/parser.y"
+    {
+		  /*printf("value in values\n");*/
+	  	(yyval.vec) = new std::vector<TValue *>();
+		(yyval.vec)->push_back((yyvsp[(1) - (1)].tv));
+	  }
+    break;
+
+  case 10:
+
+/* Line 1806 of yacc.c  */
+#line 102 "src/parser.y"
+    {
+		  /*printf("object in value\n");*/
+		(yyval.tv) = new TValue();
+	 	(yyval.tv)->value.obj = (yyvsp[(1) - (1)].jsonobj);
+		(yyval.tv)->tt = XJSON_TOBJECT;
+	 }
+    break;
+
+  case 11:
+
+/* Line 1806 of yacc.c  */
+#line 109 "src/parser.y"
+    {
+		  /*printf("array in value\n");*/
+		(yyval.tv) = new TValue();
+	 	(yyval.tv)->value.arrobj = (yyvsp[(1) - (1)].arrobj);
+		(yyval.tv)->tt = XJSON_TARRAY;
+	 }
+    break;
+
+  case 12:
+
+/* Line 1806 of yacc.c  */
+#line 116 "src/parser.y"
+    {
+		  /*printf("string in value\n");*/
+		(yyval.tv) = new TValue();
+	 	(yyval.tv)->value.s = (yyvsp[(1) - (1)].s);
+		(yyval.tv)->tt = XJSON_TSTRING;
+	 }
+    break;
+
+  case 13:
+
+/* Line 1806 of yacc.c  */
+#line 123 "src/parser.y"
+    {
+		  /*printf("number in value\n");*/
+		(yyval.tv) = new TValue();
+	 	(yyval.tv)->value.n = (yyvsp[(1) - (1)].n);
+		(yyval.tv)->tt = XJSON_TNUMBER;
+	 }
+    break;
+
+  case 14:
+
+/* Line 1806 of yacc.c  */
+#line 132 "src/parser.y"
+    {
+		  /*printf("pairs\n");*/
+	 	(yyvsp[(1) - (3)].mp)->insert(*(yyvsp[(3) - (3)].p));
+		delete (yyvsp[(3) - (3)].p);
+		(yyval.mp) = (yyvsp[(1) - (3)].mp);
+	 }
+    break;
+
+  case 15:
+
+/* Line 1806 of yacc.c  */
+#line 139 "src/parser.y"
+    {
+		  /*printf("pair in paris\n");*/
+	 	(yyval.mp) = new std::map<Key*, TValue*>();
+		(yyval.mp)->insert(*(yyvsp[(1) - (1)].p));
+		delete (yyvsp[(1) - (1)].p);
+	 }
+    break;
+
+  case 16:
+
+/* Line 1806 of yacc.c  */
+#line 148 "src/parser.y"
+    {
+		  /*printf("pair\n");*/
+		(yyval.p) = new std::pair<Key*, TValue*>(new std::string((yyvsp[(1) - (3)].s)), (yyvsp[(3) - (3)].tv));
+		delete (yyvsp[(1) - (3)].s);
+	}
+    break;
+
+  case 17:
+
+/* Line 1806 of yacc.c  */
+#line 156 "src/parser.y"
+    {
+		  /*printf("number\n");*/
+	  }
+    break;
+
+  case 18:
+
+/* Line 1806 of yacc.c  */
+#line 162 "src/parser.y"
+    {
+		  /*printf("string\n");*/
+	  }
+    break;
+
+
+
+/* Line 1806 of yacc.c  */
+#line 1578 "src/y.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1610,7 +1805,7 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 65 "src/parser.y"
+#line 167 "src/parser.y"
 
 
 #include "lex.yy.c"

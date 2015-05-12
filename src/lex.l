@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "json.h"
+#include "xjson.h"
 
 #define YY_DECL    int yylex(YYSTYPE *lval, parser_state *p)
 
@@ -43,8 +43,17 @@ OPERATOR ("{"|"}"|"]"|"["|","|":")
 
 %%
 
-{NUMBER}		{ return NUMBER; }
-{STRING}		{ return STRING; }
+{NUMBER}		{ 
+					lval->n = atof(yytext);
+					return NUMBER; 
+				}
+{STRING}		{ 
+					/* 去掉引号 */
+					int len = strlen(yytext) - 2;
+					lval->s = strncpy(new char[len + 1], yytext + 1, len);
+					lval->s[len] = '\0';
+					return STRING; 
+				}
 {OPERATOR}		{ return yytext[0]; }
 [ \t\n]			{  }
 .				{ 

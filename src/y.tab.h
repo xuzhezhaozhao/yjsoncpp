@@ -52,13 +52,21 @@ typedef union YYSTYPE
 /* Line 2068 of yacc.c  */
 #line 11 "src/parser.y"
 
-	int a;
-	char b;
+	TValue *tv;
+	double n;
+	char *s;
+
+	std::pair<Key*, TValue*> *p;
+	std::map<Key*, TValue*> *mp;
+	std::vector<TValue*> *vec;
+
+	ArrayObject *arrobj;
+	JsonObject *jsonobj;
 
 
 
 /* Line 2068 of yacc.c  */
-#line 62 "src/y.tab.h"
+#line 70 "src/y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

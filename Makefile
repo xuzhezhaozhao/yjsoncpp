@@ -40,7 +40,7 @@ obj/parser.o : src/y.tab.c src/lex.yy.c | obj
 	@echo compiling $(@F)
 	$V$(CXX) $(CXXFLAGS) -MMD -MP -c src/y.tab.c -o obj/parser.o
 
-obj/json.o : src/y.tab.h src/lex.yy.h
+obj/xjson.o : src/y.tab.h src/lex.yy.h
 
 $(TARGET) : $(OBJS)
 	@echo linking $(@F)
