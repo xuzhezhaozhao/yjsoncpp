@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "xjson.h"
+#include "yjson.h"
 
 %}
 
@@ -169,6 +169,8 @@ String: STRING
 
 static void yyerror(parser_state *p, const char *s)
 {
-	p->errmsg = new char[128];
+	if (!p->errmsg) p->errmsg = new char[128];
+
 	sprintf(p->errmsg, "error: %s at line %d.\n", s, yylineno);
+	++p->nerr;
 }

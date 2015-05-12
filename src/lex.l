@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "xjson.h"
+#include "yjson.h"
 
 #define YY_DECL    int yylex(YYSTYPE *lval, parser_state *p)
 

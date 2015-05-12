@@ -1,5 +1,5 @@
-#ifndef _XJSON_H_
-#define _XJSON_H_
+#ifndef _YJSON_H_
+#define _YJSON_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,6 +84,11 @@ public:
 };
 
 
+//#include "y.tab.h"
+//#include "lex.yy.h"
+
+//int yyparse (parser_state *p);
+
 class Reader {
 private:	
 
@@ -119,8 +124,8 @@ public:
 
 
 int parse_input (parser_state *p, FILE *f);
-int parse_file (parser_state *p, const char *s);
-int parse_string (parser_state *p, const char *prog);
-
+int parse_file (parser_state *p, const char *fname);
+int parse_string (parser_state *p, const char *str);
+int parse_lstring(parser_state *p, const char *str, size_t len);
 
 #endif
