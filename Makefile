@@ -10,7 +10,7 @@ LIBS =
 
 TESTS=$(wildcard cases/*.json)
 
-SRCS = $(filter-out src/y.tab.c src/lex.yy.c, $(wildcard src/*.cpp))
+SRCS = $(filter-out src/yacc.c src/lex.c, $(wildcard src/*.cpp))
 OBJS:=$(SRCS:src/%.cpp=obj/%.o) obj/parser.o
 DEPS:=$(OBJS:obj/%.o=obj/%.d)
 
@@ -28,19 +28,19 @@ obj/%.o: src/%.cpp | obj
 	@echo compiling $(@F)
 	$V$(CXX) $(CXXFLAGS) -MMD -MP -c -o $@ $<
 
-src/y.tab.c src/y.tab.h : src/parser.y
+src/yacc.c src/yacc.h : src/parser.y
 	@echo generating $(@F)
-	$V$(YACC) -o src/y.tab.c src/parser.y
+	$V$(YACC) -o src/yacc.c src/parser.y
 
-src/lex.yy.c src/lex.yy.h : src/lex.l
+src/lex.c src/lex.h : src/lex.l
 	@echo generating $(@F)
-	$V$(LEX) --header-file=src/lex.yy.h -o src/lex.yy.c src/lex.l
+	$V$(LEX) --header-file=src/lex.h -o src/lex.c src/lex.l
 
-obj/parser.o : src/y.tab.c src/lex.yy.c | obj
+obj/parser.o : src/yacc.c src/lex.c | obj
 	@echo compiling $(@F)
-	$V$(CXX) $(CXXFLAGS) -MMD -MP -c src/y.tab.c -o obj/parser.o
+	$V$(CXX) $(CXXFLAGS) -MMD -MP -c src/yacc.c -o obj/parser.o
 
-obj/yjson.o : src/y.tab.h src/lex.yy.h
+obj/yjson.o : src/yacc.h src/lex.h
 
 $(TARGET) : $(OBJS)
 	@echo linking $(@F)
@@ -49,8 +49,8 @@ $(TARGET) : $(OBJS)
 
 clean:
 	$Vrm -rf $(OBJS) $(DEPS) $(TARGET)
-	$Vrm -rf src/y.tab.c src/y.tab.h src/y.output
-	$Vrm -rf src/lex.yy.c src/lex.yy.h
+	$Vrm -rf src/yacc.c src/yacc.h src/y.output
+	$Vrm -rf src/lex.c src/lex.h
 
 .PHONY : clean
 

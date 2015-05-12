@@ -2,7 +2,8 @@
 bin/
 obj/
 *.swp
-src/y.tab.c
-src/y.tab.h
-src/lex.yy.c
-src/lex.yy.h
+src/lex.c
+src/lex.h
+src/yacc.c
+src/yacc.h
+tags

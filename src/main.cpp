@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iostream>
 
 #include "yjson.h"
 
@@ -49,16 +50,26 @@ int main(int argc, char *argv[]) {
 		argv++;
 	}
 
+	
+	TValue root;
 	if (e_prog) {
 		printf("%s\n", e_prog);
 		CHECK("string: ", parse_string(&p, e_prog), p);
 	} else if (argc == 1) {
-		CHECK("stdin: ", parse_input(&p, stdin), p);
+		//CHECK("stdin: ", parse_input(&p, stdin), p);
+		Reader reader;
+		bool successful = reader.parse(stdin, root);
+		if (successful) {
+			Writer writer;
+			std::cout << writer.formatWrite(root);
+		}
+
 	} else {
 		for (int i = 1; i < argc; i++) {
 			CHECK(argv[i], parse_file(&p, argv[i]), p);
 		}
 	}
+
 
 	return 0;
 }

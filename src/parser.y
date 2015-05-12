@@ -47,13 +47,13 @@ Json: Object
 	{
 		  /*printf("json object\n");*/
 		p->root.value.obj = $1;
-		p->root.tt = XJSON_TOBJECT;
+		p->root.tt = YJSON_TOBJECT;
 	}
 	| Array
 	{
 		  /*printf("json array\n");*/
 		p->root.value.arrobj = $1;
-		p->root.tt = XJSON_TARRAY;
+		p->root.tt = YJSON_TARRAY;
 	}
 	;
 
@@ -102,28 +102,28 @@ Value: Object
 		  /*printf("object in value\n");*/
 		$$ = new TValue();
 	 	$$->value.obj = $1;
-		$$->tt = XJSON_TOBJECT;
+		$$->tt = YJSON_TOBJECT;
 	 }
 	 | Array  
 	 {
 		  /*printf("array in value\n");*/
 		$$ = new TValue();
 	 	$$->value.arrobj = $1;
-		$$->tt = XJSON_TARRAY;
+		$$->tt = YJSON_TARRAY;
 	 }
 	 | String 
 	 {
 		  /*printf("string in value\n");*/
 		$$ = new TValue();
 	 	$$->value.s = $1;
-		$$->tt = XJSON_TSTRING;
+		$$->tt = YJSON_TSTRING;
 	 }
 	 | Number
 	 {
 		  /*printf("number in value\n");*/
 		$$ = new TValue();
 	 	$$->value.n = $1;
-		$$->tt = XJSON_TNUMBER;
+		$$->tt = YJSON_TNUMBER;
 	 }
 	 ;
 
@@ -165,7 +165,7 @@ String: STRING
 
 %%
 
-#include "lex.yy.c"
+#include "lex.c"
 
 static void yyerror(parser_state *p, const char *s)
 {
