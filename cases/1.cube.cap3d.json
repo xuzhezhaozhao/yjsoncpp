@@ -1,0 +1,69 @@
+{
+   "block_results" : {
+      "cube" : [
+         {
+            "SIZE" : 2,
+            "dest_block" : "cubeblk",
+            "src_block" : "cubeblk",
+            "sums" : [
+               24608.06337803182,
+               424508.6086237114,
+               -16117.04163915301,
+               354212.8558108571
+            ],
+            "task.gtried" : 16000,
+            "task.npath_array" : [ 7994, 8006 ],
+            "task.sumpdf" : 16000.0
+         },
+         {
+            "SIZE" : 2,
+            "dest_block" : "",
+            "src_block" : "cubeblk",
+            "sums" : [
+               39046.01547721712,
+               702833.3813954743,
+               -47967.04516845442,
+               798258.2713874535
+            ],
+            "task.gtried" : 16000,
+            "task.npath_array" : [ 7994, 8006 ],
+            "task.sumpdf" : 16000.0
+         }
+      ]
+   },
+   "casefile_md5" : "36ac4f60a6f1bb8e64dc9ec7ae123a5e",
+   "net_results" : {
+      "cube" : [
+         {
+            "SIZE" : 2,
+            "dest_net" : "cube",
+            "src_net" : "cube",
+            "sums" : [
+               24608.06337803182,
+               424508.6086237114,
+               -16117.04163915301,
+               354212.8558108571
+            ],
+            "task.gtried" : 16000,
+            "task.npath_array" : [ 7994, 8006 ],
+            "task.sumpdf" : 16000.0
+         },
+         {
+            "SIZE" : 2,
+            "dest_net" : "",
+            "src_net" : "cube",
+            "sums" : [
+               39046.01547721712,
+               702833.3813954743,
+               -47967.04516845442,
+               798258.2713874535
+            ],
+            "task.gtried" : 16000,
+            "task.npath_array" : [ 7994, 8006 ],
+            "task.sumpdf" : 16000.0
+         }
+      ]
+   },
+   "nhops" : 765407,
+   "nwalks" : 19000
+}
