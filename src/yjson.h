@@ -41,6 +41,10 @@ struct parser_state {
 	int nerr = 0;
 	TValue root;
 	char *errmsg = NULL;
+
+	~parser_state () {
+		if (errmsg) { delete errmsg; }
+	}
 };
 
 
@@ -104,25 +108,29 @@ public:
 	bool parse (
 			const std::string &document, Value &root, 
 			bool collectComments = true) {
+		init_parser_state();
 		return true;
 	}
 
 	bool parse (const char *beginDoc, const char *endDoc, 
 			Value &root, bool collectComments = true) {
+		init_parser_state();
 		return true;
 	}
 
 	bool parse (const char *beginDoc, 
 			TValue &root, bool collectComments = true) {
-		//parser_state p;
+		init_parser_state();
+
 		parse_string(&p, beginDoc);
+
 		root = p.root;
 
 		return p.nerr == 0 ? true : false;
 	}
 
 	bool parse (FILE *f, TValue &root, bool collectComments = true) {
-		//parser_state p;
+		init_parser_state();
 		parse_input(&p, f);
 		root = p.root;
 
@@ -131,6 +139,7 @@ public:
 
 	bool parse (std::istream &is, Value &root, 
 			bool collectComments = true ) {
+		init_parser_state();
 		return true;
 	}
 
@@ -141,6 +150,11 @@ public:
 
 	std::string	getFormattedErrorMessages () const {
 		return "";
+	}
+
+private:
+	void init_parser_state () {
+		p.nerr = 0;
 	}
 
 };

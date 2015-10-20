@@ -1,8 +1,8 @@
 V ?= @
 
-YACC = bison -d
+YACC = bison
 LEX = flex
-CXX = g++-4.8
+CXX = g++
 TARGET = bin/parser
 CDEFS = -DDEBUG_VERBOSE
 CXXFLAGS = -g -Wall $(CDEFS) -std=c++11 
@@ -11,7 +11,7 @@ LIBS =
 TESTS=$(wildcard cases/*.json)
 
 SRCS = $(filter-out src/yacc.c src/lex.c, $(wildcard src/*.cpp))
-OBJS:=$(SRCS:src/%.cpp=obj/%.o) obj/parser.o
+OBJS:=$(SRCS:src/%.cpp=obj/%.o)
 DEPS:=$(OBJS:obj/%.o=obj/%.d)
 
 all : $(TARGET)
@@ -28,19 +28,15 @@ obj/%.o: src/%.cpp | obj
 	@echo compiling $(@F)
 	$V$(CXX) $(CXXFLAGS) -MMD -MP -c -o $@ $<
 
-src/yacc.c src/yacc.h : src/parser.y
+src/yacc.c: src/yacc.y src/lex.c
 	@echo generating $(@F)
-	$V$(YACC) -o src/yacc.c src/parser.y
+	$V$(YACC) -o src/yacc.c src/yacc.y
 
-src/lex.c src/lex.h : src/lex.l
+src/lex.c: src/lex.l
 	@echo generating $(@F)
-	$V$(LEX) --header-file=src/lex.h -o src/lex.c src/lex.l
+	$V$(LEX) -o src/lex.c src/lex.l
 
-obj/parser.o : src/yacc.c src/lex.c | obj
-	@echo compiling $(@F)
-	$V$(CXX) $(CXXFLAGS) -MMD -MP -c src/yacc.c -o obj/parser.o
-
-obj/yjson.o : src/yacc.h src/lex.h
+obj/yjson.o : src/yacc.c
 
 $(TARGET) : $(OBJS)
 	@echo linking $(@F)

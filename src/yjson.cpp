@@ -2,8 +2,7 @@
 
 #include "yjson.h"
 
-#include "yacc.h"
-#include "lex.h"
+#include "yacc.c"
 
 int yyparse (parser_state *p);
 
